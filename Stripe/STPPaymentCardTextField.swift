@@ -1411,7 +1411,7 @@ public class STPPaymentCardTextField: UIControl, UIKeyInput, STPFormTextFieldDel
   }
 
   // MARK: STPFormTextFieldDelegate
-  @objc(formTextFieldDidBackspaceOnEmpty:) func formTextFieldDidBackspace(
+    @objc(formTextFieldDidBackspaceOnEmpty:) public func formTextFieldDidBackspace(
     onEmpty formTextField: STPFormTextField
   ) {
     let previous = previousField()
@@ -1422,7 +1422,7 @@ public class STPPaymentCardTextField: UIControl, UIKeyInput, STPFormTextFieldDel
     }
   }
 
-  @objc(formTextField:modifyIncomingTextChange:) func formTextField(
+    @objc(formTextField:modifyIncomingTextChange:) public func formTextField(
     _ formTextField: STPFormTextField,
     modifyIncomingTextChange input: NSAttributedString
   ) -> NSAttributedString {
@@ -1462,7 +1462,7 @@ public class STPPaymentCardTextField: UIControl, UIKeyInput, STPFormTextFieldDel
     }
   }
 
-  @objc(formTextFieldTextDidChange:) func formTextFieldTextDidChange(
+    @objc(formTextFieldTextDidChange:) public func formTextFieldTextDidChange(
     _ formTextField: STPFormTextField
   ) {
     guard let fieldType = STPCardFieldType(rawValue: formTextField.tag) else {
