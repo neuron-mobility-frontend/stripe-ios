@@ -9,13 +9,12 @@
 #import <SafariServices/SafariServices.h>
 #import <XCTest/XCTest.h>
 
-#import "NSError+Stripe.h"
-#import "NSURLComponents+Stripe.h"
+
+
 #import "STPFixtures.h"
-#import "STPRedirectContext.h"
-#import "STPRedirectContext+Private.h"
+
 #import "STPTestUtils.h"
-#import "STPURLCallbackHandler.h"
+
 
 @interface STPRedirectContext (Testing)
 - (void)unsubscribeFromNotifications;
@@ -83,7 +82,7 @@
 - (void)testInitWithSource {
     STPSource *source = [STPFixtures iDEALSource];
     __block BOOL completionCalled = NO;
-    NSError *fakeError = [NSError new];
+    NSError *fakeError = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:0 userInfo:nil];
 
     STPRedirectContext *sut = [[STPRedirectContext alloc] initWithSource:source completion:^(NSString * _Nonnull sourceID, NSString * _Nullable clientSecret, NSError * _Nullable error) {
         XCTAssertEqualObjects(source.stripeID, sourceID);
@@ -106,7 +105,7 @@
     STPSource *source = [STPFixtures alipaySourceWithNativeURL];
     __block BOOL completionCalled = NO;
     NSURL *nativeURL = [NSURL URLWithString:source.details[@"native_url"]];
-    NSError *fakeError = [NSError new];
+    NSError *fakeError = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:0 userInfo:nil];
 
     STPRedirectContext *sut = [[STPRedirectContext alloc] initWithSource:source completion:^(NSString * _Nonnull sourceID, NSString * _Nullable clientSecret, NSError * _Nullable error) {
         XCTAssertEqualObjects(source.stripeID, sourceID);
@@ -128,7 +127,7 @@
 - (void)testInitWithPaymentIntent {
     STPPaymentIntent *paymentIntent = [STPFixtures paymentIntent];
     __block BOOL completionCalled = NO;
-    NSError *fakeError = [NSError new];
+    NSError *fakeError = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:0 userInfo:nil];
 
     STPRedirectContext *sut = [[STPRedirectContext alloc] initWithPaymentIntent:paymentIntent completion:^(NSString * _Nonnull clientSecret, NSError * _Nullable error) {
         XCTAssertEqualObjects(paymentIntent.clientSecret, clientSecret);
@@ -245,11 +244,10 @@
     id sut = OCMPartialMock(context);
 
     OCMStub([sut handleRedirectCompletionWithError:[OCMArg any] shouldDismissViewController:YES]).andForwardToRealObject().andDo(^(__unused NSInvocation *invocation) {
-        [context safariViewControllerDidCompleteDismissal:OCMClassMock([SFSafariViewController class])];
+        [context safariViewControllerDidCompleteDismissal:[[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"https://www.stripe.com"]]];
     });
 
     [sut startSafariViewControllerRedirectFlowFromViewController:mockVC];
-
     BOOL(^checker)(id) = ^BOOL(id vc) {
         if ([vc isKindOfClass:[SFSafariViewController class]]) {
             NSURL *url = source.redirect.returnURL;
@@ -261,6 +259,7 @@
         }
         return NO;
     };
+ 
     OCMVerify([mockVC presentViewController:[OCMArg checkWithBlock:checker]
                                    animated:YES
                                  completion:[OCMArg any]]);
@@ -313,11 +312,14 @@
 - (void)testSafariViewControllerRedirectFlow_didFinish {
     id mockVC = OCMClassMock([UIViewController class]);
     STPSource *source = [STPFixtures iDEALSource];
+
     XCTestExpectation *exp = [self expectationWithDescription:@"completion"];
     STPRedirectContext *context = [[STPRedirectContext alloc] initWithSource:source completion:^(NSString *sourceID, NSString *clientSecret, NSError *error) {
         XCTAssertEqualObjects(sourceID, source.stripeID);
         XCTAssertEqualObjects(clientSecret, source.clientSecret);
-        XCTAssertNil(error);
+        // because we are manually invoking the dismissal, we report this as a cancelation
+        XCTAssertEqualObjects(error.domain, [STPError stripeDomain]);
+        XCTAssertEqual(error.code, STPCancellationError);
         [exp fulfill];
     }];
     id sut = OCMPartialMock(context);
@@ -326,7 +328,7 @@
     OCMReject([sut dismissPresentedViewController]);
 
     OCMStub([sut handleRedirectCompletionWithError:[OCMArg any] shouldDismissViewController:NO]).andForwardToRealObject().andDo(^(__unused NSInvocation *invocation) {
-        [context safariViewControllerDidCompleteDismissal:OCMClassMock([SFSafariViewController class])];
+        [context safariViewControllerDidCompleteDismissal:[[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"https://www.stripe.com"]]];
     });
 
     [sut startSafariViewControllerRedirectFlowFromViewController:mockVC];
@@ -343,47 +345,7 @@
                                    animated:YES
                                  completion:[OCMArg any]]);
     OCMVerify([sut unsubscribeFromNotifications]);
-
     [self waitForExpectationsWithTimeout:2 handler:nil];
-}
-
-/**
- After starting a SafariViewController redirect flow,
- when SafariViewController fails to load the initial page (on iOS < 11.0),
- RedirectContext's completion block should not be called (SFVC keeps loading)
- */
-- (void)testSafariViewControllerRedirectFlow_failedInitialLoad_preiOS11 {
-    if (@available(iOS 11, *)) {
-        // See testSafariViewControllerRedirectFlow_failedInitialLoad_iOS11Plus
-        // and testSafariViewControllerRedirectFlow_failedInitialLoadAfterRedirect_iOS11Plus
-        return; // Skipping
-    }
-
-    id mockVC = OCMClassMock([UIViewController class]);
-    STPSource *source = [STPFixtures iDEALSource];
-    STPRedirectContext *context = [[STPRedirectContext alloc] initWithSource:source completion:^(__unused NSString *sourceID, __unused NSString *clientSecret, __unused NSError *error) {
-        XCTFail(@"completion called");
-    }];
-    id sut = OCMPartialMock(context);
-
-    OCMReject([sut unsubscribeFromNotifications]);
-    OCMReject([sut dismissPresentedViewController]);
-
-    [sut startSafariViewControllerRedirectFlowFromViewController:mockVC];
-
-    BOOL(^checker)(id) = ^BOOL(id vc) {
-        if ([vc isKindOfClass:[SFSafariViewController class]]) {
-            SFSafariViewController *sfvc = (SFSafariViewController *)vc;
-            // Tell the delegate that the initial load failed. on iOS 10, this is a no-op
-            [sfvc.delegate safariViewController:sfvc didCompleteInitialLoad:NO];
-            return YES;
-        }
-        return NO;
-    };
-    OCMVerify([mockVC presentViewController:[OCMArg checkWithBlock:checker]
-                                   animated:YES
-                                 completion:[OCMArg any]]);
-    [self unsubscribeContext:context];
 }
 
 /**
@@ -391,12 +353,7 @@
  when SafariViewController fails to load the initial page (on iOS 11+ & without redirects),
  RedirectContext's completion block and dismiss method should be called.
  */
-- (void)testSafariViewControllerRedirectFlow_failedInitialLoad_iOS11Plus API_AVAILABLE(ios(11)) {
-    if (@available(iOS 11, *)) {
-    } else {
-        // see testSafariViewControllerRedirectFlow_failedInitialLoad_preiOS11
-        return; // Skipping
-    }
+- (void)testSafariViewControllerRedirectFlow_failedInitialLoad_iOS11Plus {
 
     id mockVC = OCMClassMock([UIViewController class]);
     STPSource *source = [STPFixtures iDEALSource];
@@ -411,7 +368,7 @@
     id sut = OCMPartialMock(context);
 
     OCMStub([sut handleRedirectCompletionWithError:[OCMArg any] shouldDismissViewController:YES]).andForwardToRealObject().andDo(^(__unused NSInvocation *invocation) {
-        [context safariViewControllerDidCompleteDismissal:OCMClassMock([SFSafariViewController class])];
+        [context safariViewControllerDidCompleteDismissal:[[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"https://www.stripe.com"]]];
     });
 
     [sut startSafariViewControllerRedirectFlowFromViewController:mockVC];
@@ -427,6 +384,7 @@
     OCMVerify([mockVC presentViewController:[OCMArg checkWithBlock:checker]
                                    animated:YES
                                  completion:[OCMArg any]]);
+
     OCMVerify([sut unsubscribeFromNotifications]);
     OCMVerify([sut dismissPresentedViewController]);
 
@@ -439,13 +397,7 @@
  RedirectContext's completion block should not be called (SFVC keeps loading)
  */
 
-- (void)testSafariViewControllerRedirectFlow_failedInitialLoadAfterRedirect_iOS11Plus API_AVAILABLE(ios(11)) {
-    if (@available(iOS 11, *)) {
-    } else {
-        // see testSafariViewControllerRedirectFlow_failedInitialLoad_preiOS11
-        return; // Skipping
-    }
-
+- (void)testSafariViewControllerRedirectFlow_failedInitialLoadAfterRedirect_iOS11Plus {
     id mockVC = OCMClassMock([UIViewController class]);
     STPSource *source = [STPFixtures iDEALSource];
     STPRedirectContext *context = [[STPRedirectContext alloc] initWithSource:source completion:^(__unused NSString *sourceID, __unused NSString *clientSecret, __unused NSError *error) {
@@ -530,7 +482,7 @@
  block and dismiss method should be called.
  */
 - (void)testSafariAppRedirectFlow_activeNotification {
-    id sut;
+    __block id sut;
 
     STPSource *source = [STPFixtures iDEALSource];
     XCTestExpectation *exp = [self expectationWithDescription:@"completion"];
@@ -538,9 +490,8 @@
         XCTAssertEqualObjects(sourceID, source.stripeID);
         XCTAssertEqualObjects(clientSecret, source.clientSecret);
         XCTAssertNil(error);
-
+        
         OCMVerify([sut unsubscribeFromNotifications]);
-        OCMVerify([sut dismissPresentedViewController]);
 
         [exp fulfill];
     }];
@@ -693,7 +644,7 @@
     STPRedirectContext *context = [[STPRedirectContext alloc] initWithSource:source
                                                                   completion:^(__unused NSString *sourceID, __unused NSString *clientSecret, __unused NSError *error) {
                                                                       XCTAssertNotNil(error);
-                                                                      XCTAssertEqual(error.domain, STPRedirectContextErrorDomain);
+                                                                      XCTAssertEqualObjects(error.domain, STPRedirectContext.STPRedirectContextErrorDomain);
                                                                       XCTAssertEqual(error.code, STPRedirectContextAppRedirectError);
                                                                       [expectation fulfill];
                                                                   }];

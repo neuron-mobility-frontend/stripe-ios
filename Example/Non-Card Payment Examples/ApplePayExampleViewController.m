@@ -6,7 +6,8 @@
 //  Copyright © 2017 Stripe. All rights reserved.
 //
 
-#import <Stripe/Stripe.h>
+@import Stripe;
+@import PassKit;
 
 #import "ApplePayExampleViewController.h"
 #import "BrowseExamplesViewController.h"
@@ -69,7 +70,7 @@
 
 - (void)pay {
     // Build the payment request
-    PKPaymentRequest *paymentRequest = [Stripe paymentRequestWithMerchantIdentifier:AppleMerchantId country:@"US" currency:@"USD"];
+    PKPaymentRequest *paymentRequest = [StripeAPI paymentRequestWithMerchantIdentifier:AppleMerchantId country:@"US" currency:@"USD"];
     [paymentRequest setRequiredShippingContactFields:[NSSet setWithObject:PKContactFieldPostalAddress]];
     [paymentRequest setRequiredBillingContactFields:[NSSet setWithObject:PKContactFieldPostalAddress]];
     paymentRequest.shippingMethods = [self.shippingManager defaultShippingMethods];
@@ -82,7 +83,7 @@
     if (applePayContext) {
         [self.activityIndicator startAnimating];
         self.payButton.enabled = NO;
-        [applePayContext presentApplePayOnViewController:self completion:nil];
+        [applePayContext presentApplePayWithCompletion:nil];
     } else {
         NSLog(@"Make sure you've configured Apple Pay correctly, as outlined at https://stripe.com/docs/apple-pay#native");
     }
@@ -90,7 +91,7 @@
 
 #pragma mark - STPApplePayContextDelegate
 
-- (void)applePayContext:(STPApplePayContext *)context didCreatePaymentMethod:(__unused STPPaymentMethod *)paymentMethod paymentInformation:(__unused PKPayment *)paymentInformation completion:(STPIntentClientSecretCompletionBlock)completion {
+- (void)applePayContext:(STPApplePayContext *)context didCreatePaymentMethod:(STPPaymentMethod *)paymentMethod paymentInformation:(PKPayment *)paymentInformation completion:(void (^)(NSString * _Nullable, NSError * _Nullable))completion {
     // Create the Stripe PaymentIntent representing the payment on our backend
     [[MyAPIClient sharedClient] createPaymentIntentWithCompletion:^(MyAPIClientResult status, NSString *clientSecret, NSError *error) {
         // Call the completion block with the PaymentIntent's client secret
@@ -112,6 +113,7 @@
             break;
             
         case STPPaymentStatusUserCancellation:
+            [self.delegate exampleViewController:self didFinishWithMessage:@"Payment cancelled"];
             break;
     }
 }

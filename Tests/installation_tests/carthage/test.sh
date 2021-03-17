@@ -41,7 +41,7 @@ info "Executing carthage bootstrap..."
 
 cd "${script_dir}" || die "Executing \`cd\` failed"
 
-carthage bootstrap --platform ios --configuration Debug --no-use-binaries
+carthage bootstrap --platform ios --configuration Debug --no-use-binaries --cache-builds --use-xcframeworks
 
 carthage_exit_code="$?"
 
@@ -56,7 +56,7 @@ xcodebuild clean build \
   -project "${script_dir}/CarthageTest.xcodeproj" \
   -scheme "CarthageTest" \
   -sdk "iphonesimulator" \
-  -destination "platform=iOS Simulator,name=iPhone 6,OS=10.3.1" \
+  -destination "platform=iOS Simulator,name=iPhone 8,OS=13.7" \
   | xcpretty
 
 xcodebuild_exit_code="${PIPESTATUS[0]}"

@@ -22,24 +22,30 @@ fi
 # Install test dependencies
 info "Installing test dependencies..."
 
-carthage bootstrap --platform iOS --configuration Release --no-use-binaries
+carthage bootstrap --platform iOS --configuration Release --no-use-binaries --cache-builds --use-xcframeworks
 carthage_exit_code="$?"
 
 if [[ "${carthage_exit_code}" != 0 ]]; then
   die "Executing carthage failed with status code: ${carthage_exit_code}"
 fi
 
-# Execute tests (iPhone 7 @ iOS 12.4)
-info "Executing tests (iPhone 7 @ iOS 12.4)..."
+# Execute tests (iPhone 8 @ iOS 13.7)
+info "Executing tests (iPhone 8 @ iOS 13.7)..."
 
-xcodebuild clean test \
+if [[ "${CI}" == "true" ]]; then
+  test_method="test-without-building"
+else
+  test_method="test"
+fi
+
+xcodebuild ${test_method} \
   -workspace "Stripe.xcworkspace" \
   -scheme "StripeiOS" \
   -configuration "Debug" \
   -sdk "iphonesimulator" \
-  -destination "platform=iOS Simulator,name=iPhone 7,OS=12.4" \
+  -destination "platform=iOS Simulator,name=iPhone 8,OS=13.7" \
+  -derivedDataPath build-ci-tests \
   | xcpretty
-
 exit_code="${PIPESTATUS[0]}"
 
 if [[ "${exit_code}" != 0 ]]; then

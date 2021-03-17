@@ -1,3 +1,71 @@
+## 21.3.1 2021-03-25
+* Adds support for Maestro in Apple Pay on iOS 12 or later.
+
+## 21.3.0 2021-02-18
+* Adds support for SwiftUI in custom integration using the `STPPaymentCardTextField.Representable` View and the `.paymentConfirmationSheet()` ViewModifier. See `IntegrationTester` for usage examples.
+* Removes the UIViewController requirement from STPApplePayContext, allowing it to be used in SwiftUI.
+* Fixes an issue where `STPPaymentOptionsViewController` could fail to register a card. [#1758](https://github.com/stripe/stripe-ios/issues/1758)
+* Fixes an issue where some UnionPay test cards were marked as invalid. [#1759](https://github.com/stripe/stripe-ios/issues/1759)
+* Updates tests to run on Carthage 0.37 with .xcframeworks.
+
+
+## 21.2.1 2021-01-29
+* Fixed an issue where a payment card text field could resize incorrectly on smaller devices or with certain languages. [#1600](https://github.com/stripe/stripe-ios/issues/1600)
+* Fixed an issue where the SDK could always return English strings in certain situations. [#1677](https://github.com/stripe/stripe-ios/pull/1677) (Thanks [glaures-ioki](https://github.com/glaures-ioki)!)
+* Fixed an issue where an STPTheme had no effect on the navigation bar. [#1753](https://github.com/stripe/stripe-ios/pull/1753) (Thanks  [@rbenna](https://github.com/rbenna)!)
+* Fixed handling of nil region codes. [#1752](https://github.com/stripe/stripe-ios/issues/1752)
+* Fixed an issue preventing card scanning from being disabled. [#1751](https://github.com/stripe/stripe-ios/issues/1751)
+* Fixed an issue with enabling card scanning in an app with a localized Info.plist.[#1745](https://github.com/stripe/stripe-ios/issues/1745)
+* Added a missing additionalDocument parameter to STPConnectAccountIndividualVerification.
+* Added support for Afterpay/Clearpay.
+
+## 21.2.0 2021-01-06
+* Stripe3DS2 is now open source software under the MIT License.
+* Fixed various issues with bundling Stripe3DS2 in Cocoapods and Swift Package Manager. All binary dependencies have been removed.
+* Fixed an infinite loop during layout on small screen sizes. [#1731](https://github.com/stripe/stripe-ios/issues/1731)
+* Fixed issues with missing image assets when using Cocoapods. [#1655](https://github.com/stripe/stripe-ios/issues/1655) [#1722](https://github.com/stripe/stripe-ios/issues/1722)
+* Fixed an issue which resulted in unnecessary queries to the BIN information service.
+* Adds the ability to `attach` and `detach` PaymentMethod IDs to/from a CustomerContext. [#1729](https://github.com/stripe/stripe-ios/issues/1729)
+* Adds support for NetBanking.
+
+## 21.1.0 2020-12-07
+* Fixes a crash during manual confirmation of a 3DS2 payment. [#1725](https://github.com/stripe/stripe-ios/issues/1725)
+* Fixes an issue that could cause some image assets to be missing in certain configurations. [#1722](https://github.com/stripe/stripe-ios/issues/1722)
+* Fixes an issue with confirming Alipay transactions.
+* Re-exposes `cardNumber` parameter in `STPPaymentCardTextField`.
+* Adds support for UPI.
+
+## 21.0.1 2020-11-19
+* Fixes an issue with some initializers not being exposed publicly following the [conversion to Swift](https://stripe.com/docs/mobile/ios/sdk-21-migration).
+* Updates GrabPay integration to support synchronous updates.
+
+## 21.0.0 2020-11-18
+* The SDK is now written in Swift, and some manual changes are required. Migration instructions are available at [https://stripe.com/docs/mobile/ios/sdk-21-migration](https://stripe.com/docs/mobile/ios/sdk-21-migration).
+* Adds full support for Apple silicon.
+* Xcode 12.2 is now required.
+
+## 20.1.1 2020-10-23
+* Fixes an issue when using Cocoapods 1.10 and Xcode 12. [#1683](https://github.com/stripe/stripe-ios/pull/1683)
+* Fixes a warning when using Swift Package Manager. [#1675](https://github.com/stripe/stripe-ios/pull/1675)
+
+## 20.1.0 2020-10-15
+* Adds support for OXXO. [#1592](https://github.com/stripe/stripe-ios/pull/1592)
+* Applies a workaround for various bugs in Swift Package Manager. [#1671](https://github.com/stripe/stripe-ios/pull/1671) Please see [#1673](https://github.com/stripe/stripe-ios/issues/1673) for additional notes when using Xcode 12.0.
+* Card scanning now works when the device's orientation is unknown. [#1659](https://github.com/stripe/stripe-ios/issues/1659)
+* The expiration date field's Simplified Chinese localization has been corrected. (Thanks [cythb](https://github.com/cythb)!) [#1654](https://github.com/stripe/stripe-ios/pull/1654)
+
+## 20.0.0 2020-09-14
+* [Card scanning](https://github.com/stripe/stripe-ios#card-scanning-beta) is now built into STPAddCardViewController. Card.io support has been removed. [#1629](https://github.com/stripe/stripe-ios/pull/1629)
+* Shrunk the SDK from 1.3MB when compressed & thinned to 0.7MB, allowing for easier App Clips integration. [#1643](https://github.com/stripe/stripe-ios/pull/1643)
+* Swift Package Manager, Apple Silicon, and Catalyst are now fully supported on Xcode 12. [#1644](https://github.com/stripe/stripe-ios/pull/1644)
+* Adds support for 19-digit cards. [#1608](https://github.com/stripe/stripe-ios/pull/1608)
+* Adds GrabPay and Sofort as PaymentMethod. [#1627](https://github.com/stripe/stripe-ios/pull/1627)
+* Drops support for iOS 10. [#1643](https://github.com/stripe/stripe-ios/pull/1643)
+
+## 19.4.0 2020-08-13
+* `pkPaymentErrorForStripeError` no longer returns PKPaymentUnknownErrors. Instead, it returns the original NSError back, resulting in dismissal of the Apple Pay sheet. This means ApplePayContext dismisses the Apple Pay sheet for all errors that aren't specifically PKPaymentError types.
+* `metadata` fields are no longer populated on retrieved Stripe API objects and must be fetched on your server using your secret key. If this is causing issues with your deployed app versions please reach out to [Stripe Support](https://support.stripe.com/?contact=true). These fields have been marked as deprecated and will be removed in a future SDK version.
+
 ## 19.3.0 2020-05-28
 * Adds giropay PaymentMethod bindings [#1569](https://github.com/stripe/stripe-ios/pull/1569)
 * Adds Przelewy24 (P24) PaymentMethod bindings [#1556](https://github.com/stripe/stripe-ios/pull/1556)
@@ -41,7 +109,7 @@
 ## 18.3.0 2019-12-3
 * STPAddCardViewControllerDelegate methods previously removed in v16.0.0 are now marked as deprecated, to help migrating users [#1439](https://github.com/stripe/stripe-ios/pull/1439)
 * Fixes an issue where canceling 3DS authentication could leave PaymentIntents in an inaccurate `requires_action` state [#1443](https://github.com/stripe/stripe-ios/pull/1443)
-* Fixes text color for large titles [#1446](https://github.com/stripe/stripe-ios/pull/1446) 
+* Fixes text color for large titles [#1446](https://github.com/stripe/stripe-ios/pull/1446)
 * Re-adds support for pre-selecting the last selected payment method in STPPaymentContext and STPPaymentOptionsViewController. [#1445](https://github.com/stripe/stripe-ios/pull/1445)
 * Fix crash when adding/removing postal code cells [#1450](https://github.com/stripe/stripe-ios/pull/1450)
 
@@ -219,7 +287,7 @@
 * Adjusts scroll view content offset behavior when focusing on a text field [#943](https://github.com/stripe/stripe-ios/pull/943)
 
 ## 13.0.1 2018-05-17
-* Fixes an issue in `STPRedirectContext` causing some redirecting sources to fail in livemode due to prematurely dismissing the `SFSafariViewController` during the initial redirects. [#937](https://github.com/stripe/stripe-ios/pull/937)
+* Fixes an issue in `STPRedirectContext` causing some redirecting sources to fail in live mode due to prematurely dismissing the `SFSafariViewController` during the initial redirects. [#937](https://github.com/stripe/stripe-ios/pull/937)
 
 ## 13.0.0 2018-04-26
 * Removes Bitcoin source support. See MIGRATING.md. [#931](https://github.com/stripe/stripe-ios/pull/931)
@@ -439,7 +507,7 @@
 * This release also removes the deprecated Checkout functionality from the SDK.
 
 ## 6.2.0 2016-02-05
-* Added an `additionalAPIParameters` field to STPCardParams and STPBankAccountParams for sending additional values to the API - useful for beta features. Similarly, added an `allResponseFields` property to STPToken, STPCard, and STPBankAccount for accessing fields in the response that are not yet refelected in those classes' @properties.
+* Added an `additionalAPIParameters` field to STPCardParams and STPBankAccountParams for sending additional values to the API - useful for beta features. Similarly, added an `allResponseFields` property to STPToken, STPCard, and STPBankAccount for accessing fields in the response that are not yet reflected in those classes' @properties.
 
 ## 6.1.0 2016-01-21
 * Renamed card on STPPaymentCardTextField to cardParams.
@@ -527,7 +595,7 @@
 * Modernized code
 
 ## 1.1.2 2014-04-21
-* Added test suite for SSL certificate expiry/revokation
+* Added test suite for SSL certificate expiry/revocation
 * You can now set STPView's delegate from Interface Builder
 
 ## 1.1.1 2014-04-14

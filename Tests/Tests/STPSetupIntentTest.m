@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import "STPSetupIntent.h"
 #import "STPFixtures.h"
 #import "STPTestUtils.h"
 
@@ -61,7 +60,6 @@
     XCTAssertEqualObjects(setupIntent.clientSecret, @"seti_123456789_secret_123456789");
     XCTAssertEqualObjects(setupIntent.created, [NSDate dateWithTimeIntervalSince1970:123456789]);
     XCTAssertEqualObjects(setupIntent.customerID, @"cus_123456");
-    XCTAssertEqualObjects(setupIntent.metadata, @{@"user_id": @"guest_1234567"});
     XCTAssertEqualObjects(setupIntent.paymentMethodID, @"pm_123456");
     XCTAssertEqualObjects(setupIntent.stripeDescription, @"My Sample SetupIntent");
     XCTAssertFalse(setupIntent.livemode);

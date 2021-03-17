@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <OCMock/OCMock.h>
 #import <PassKit/PassKit.h>
-#import <Stripe/Stripe.h>
+@import Stripe;
 
+NS_ASSUME_NONNULL_BEGIN
 extern NSString *const STPTestJSONCustomer;
 
 extern NSString *const STPTestJSONCard;
@@ -31,7 +32,7 @@ extern NSString *const STPTestJSONSourceiDEAL;
 extern NSString *const STPTestJSONSourceMultibanco;
 extern NSString *const STPTestJSONSourceP24;
 extern NSString *const STPTestJSONSourceSEPADebit;
-extern NSString *const STPTestJSONSourceSOFORT;
+extern NSString *const STPTestJSONSourceSofort;
 
 @interface STPFixtures : NSObject
 
@@ -196,3 +197,4 @@ extern NSString *const STPTestJSONSourceSOFORT;
 
 @end
 
+NS_ASSUME_NONNULL_END

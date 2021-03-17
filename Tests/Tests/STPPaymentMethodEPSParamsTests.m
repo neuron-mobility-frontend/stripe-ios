@@ -9,12 +9,6 @@
 #import <XCTest/XCTest.h>
 
 
-#import "STPAPIClient.h"
-#import "STPPaymentMethod.h"
-#import "STPPaymentMethodBillingDetails.h"
-#import "STPPaymentMethodEPS.h"
-#import "STPPaymentMethodEPSParams.h"
-#import "STPPaymentMethodParams.h"
 #import "STPTestingAPIClient.h"
 
 @interface STPPaymentMethodEPSParamsTests : XCTestCase
@@ -46,7 +40,6 @@
         XCTAssertNotNil(paymentMethod.created, @"Missing created");
         XCTAssertFalse(paymentMethod.liveMode, @"Incorrect livemode");
         XCTAssertEqual(paymentMethod.type, STPPaymentMethodTypeEPS, @"Incorrect PaymentMethod type");
-        XCTAssertEqualObjects(paymentMethod.metadata, @{@"test_key": @"test_value"}, @"Incorrect metadata");
 
         // Billing Details
         XCTAssertEqualObjects(paymentMethod.billingDetails.name, @"Jenny Rosen", @"Incorrect name");

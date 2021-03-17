@@ -8,7 +8,6 @@
 
 #import "STPFixtures.h"
 #import "STPTestUtils.h"
-#import "STPEphemeralKey.h"
 
 NSString *const STPTestJSONCustomer = @"Customer";
 
@@ -31,7 +30,7 @@ NSString *const STPTestJSONSourceiDEAL = @"iDEALSource";
 NSString *const STPTestJSONSourceMultibanco = @"MultibancoSource";
 NSString *const STPTestJSONSourceP24 = @"P24Source";
 NSString *const STPTestJSONSourceSEPADebit = @"SEPADebitSource";
-NSString *const STPTestJSONSourceSOFORT = @"SOFORTSource";
+NSString *const STPTestJSONSourceSofort = @"SofortSource";
 NSString *const STPTestJSONSourceWeChatPay = @"WeChatPaySource";
 
 
@@ -246,7 +245,7 @@ NSString *const STPTestJSONSourceWeChatPay = @"WeChatPaySource";
 }
 
 + (PKPaymentRequest *)applePayRequest {
-    PKPaymentRequest *paymentRequest = [Stripe paymentRequestWithMerchantIdentifier:@"foo" country:@"US" currency:@"USD"];
+    PKPaymentRequest *paymentRequest = [StripeAPI paymentRequestWithMerchantIdentifier:@"foo" country:@"US" currency:@"USD"];
     paymentRequest.paymentSummaryItems = @[[PKPaymentSummaryItem summaryItemWithLabel:@"bar" amount:[NSDecimalNumber decimalNumberWithString:@"10.00"]]];
     return paymentRequest;
 }

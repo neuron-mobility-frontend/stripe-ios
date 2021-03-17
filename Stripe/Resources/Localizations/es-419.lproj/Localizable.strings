@@ -1,3 +1,6 @@
+/* Bank name when bank is offline for maintenance. */
+"%@ - Offline" = "%@ - Fuera de línea";
+
 /* {card brand} ending in {last4} */
 "%@ Ending In %@" = "%1$@ terminada en %2$@";
 
@@ -17,10 +20,10 @@
 "Account number" = "Número de cuenta";
 
 /* Title for Add a Card view */
-"Add a Card" = "Agregar una tarjeta";
+"Add a Card" = "Agrega una tarjeta";
 
 /* Title for SEPA Debit Account form */
-"Add a Direct Debit Account" = "Agregar una cuenta de débito directo";
+"Add a Direct Debit Account" = "Agrega una cuenta de débito directo";
 
 /* Button to add a new credit card. */
 "Add New Card…" = "Agregar nueva tarjeta...";
@@ -35,7 +38,7 @@
 "Apple Pay" = "Apple Pay";
 
 /* Caption for Apartment/Address line 2 field on address form */
-"Apt." = "Apartamento";
+"Apt." = "Apto.";
 
 /*  This is a Payment Method type brand name so shouldn't be translated unless it has a different name in a given localization. */
 "AU BECS Debit" = "Débito BECS (Australia)";
@@ -48,6 +51,9 @@
 
 /* Title for bank picker section */
 "BANK" = "BANCO";
+
+/* Label for Bank Account selection or detail entry form */
+"Bank Account" = "Cuenta bancaria";
 
 /* Title for bank account information form */
 "BANK ACCOUNT INFORMATION" = "INFORMACIÓN DE LA CUENTA BANCARIA";
@@ -62,7 +68,7 @@
 "BSB" = "BSB";
 
 /* SEPA legal authorization text – must use official translations. */
-"By providing your IBAN and confirming this payment, you are authorizing %@ and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited." = "Al proporcionar tu IBAN y confirmar el pago, estás autorizando a %@ y a Stripe, nuestro proveedor de servicios de pago, a enviar instrucciones a tu banco para que este haga un débito en tu cuenta y lo haga conforme a esas instrucciones. Tienes derecho a un reembolso del banco según los términos y condiciones del acuerdo que tengas con tu banco. El reembolso debe reclamarse en el plazo de 8 semanas a partir de la fecha en la que se hizo el débito.";
+"By providing your IBAN and confirming this payment, you are authorizing %@ and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited." = "Al proporcionar tu IBAN y confirmar el pago, estás autorizando a %@ y a Stripe, nuestro proveedor de servicios de pago, a enviar instrucciones a tu banco para que este haga un débito en tu cuenta y lo haga conforme a esas instrucciones. Tienes derecho a un rembolso del banco según los términos y condiciones del acuerdo que tengas con tu banco. El rembolso debe reclamarse en el plazo de 8 semanas a partir de la fecha en la que se hizo el débito.";
 
 /* Title for card number entry field */
 "CARD" = "TARJETA";
@@ -77,10 +83,10 @@
 "City" = "Ciudad";
 
 /* Title for contact info form */
-"Contact" = "Contacto";
+"CONTACT" = "CONTACTO";
 
 /* Title for contact info form */
-"CONTACT" = "CONTACTO";
+"Contact" = "Contacto";
 
 /* Text for continue button */
 "Continue" = "Continuar";
@@ -119,7 +125,10 @@
 "example@example.com" = "ejemplo@ejemplo.com";
 
 /* accessibility label for text field */
-"expiration date" = "fecha de caducidad";
+"expiration date" = "fecha de vencimiento";
+
+/* Payment Method type brand name */
+"FPX" = "FPX";
 
 /* Label for free shipping method */
 "Free" = "Gratis";
@@ -130,14 +139,23 @@
 /* Source type brand name */
 "Giropay" = "Giropay";
 
+/* Payment Method type brand name. */
+"giropay" = "giropay";
+
 /* IBAN placeholder – don't translate */
 "IBAN" = "IBAN";
 
 /* Source type brand name */
 "iDEAL" = "iDEAL";
 
+/* Spoken during VoiceOver when a form field has failed validation. */
+"Invalid data." = "Datos no válidos.";
+
 /* Shipping form error message */
 "Invalid Shipping Address" = "Dirección de envío inválida";
+
+/* Source type brand name */
+"Klarna" = "Klarna";
 
 /* Title for screen when data is still loading from the network. */
 "Loading…" = "Cargando...";
@@ -169,6 +187,9 @@
 /* No comment provided by engineer. */
 "OK" = "ACEPTAR";
 
+/* Button to pay with a Bank Account (using FPX). */
+"Online Banking (FPX)" = "Banca electrónica (FPX)";
+
 /* Source type brand name */
 "P24" = "P24";
 
@@ -190,11 +211,17 @@
 /* Caption for Province field on address form (only countries that use province, like Canada) */
 "Province" = "Provincia";
 
+/* Payment Method type brand name. */
+"Przelewy24" = "Przelewy24";
+
 /* Text for button to scan a credit card */
 "Scan Card" = "Escanear tarjeta";
 
 /* part of {SEPA Account} ending in {last4} */
 "SEPA Account" = "Cuenta SEPA";
+
+/* Payment method brand name */
+"SEPA Debit" = "Débito SEPA";
 
 /* Source type brand name */
 "SEPA Direct Debit" = "Débito directo SEPA";
@@ -214,14 +241,15 @@
 /* Label for shipping method form */
 "Shipping Method" = "Método de envío";
 
-/* Source type brand name */
-"SOFORT" = "SOFORT";
+/* Payment Method type brand name
+   Source type brand name */
+"Sofort" = "Sofort";
 
 /* Caption for State field on address form (only countries that use state , like United States) */
 "State" = "Estado";
 
 /* Caption for generalized state/province/region field on address form (not tied to a specific country's format) */
-"State / Province / Region" = "Estado / Provincia / Región";
+"State / Province / Region" = "Estado/Provincia/Región";
 
 /* Error string displayed to user when they have entered an incomplete BSB number. BSB refers to an Australian bank account number */
 "The BSB you entered is incomplete." = "El BSB que ingresaste está incompleto.";
@@ -269,20 +297,20 @@
 "Your card was declined" = "Tu tarjeta fue rechazada.";
 
 /* Error when the card's expiration month is not valid */
-"Your card's expiration month is invalid" = "El mes de caducidad de tu tarjeta es inválido.";
+"Your card's expiration month is invalid" = "El mes de vencimiento de tu tarjeta no es válido.";
 
 /* Error when the card's expiration year is not valid */
-"Your card's expiration year is invalid" = "El año de caducidad de tu tarjeta es inválido.";
+"Your card's expiration year is invalid" = "El año de vencimiento de tu tarjeta no es válido";
 
 /* Error when the card number is not valid */
-"Your card's number is invalid" = "El número de la tarjeta es inválido.";
+"Your card's number is invalid" = "El número de tarjeta no es válido";
 
 /* Error when the card's CVC is not valid */
-"Your card's security code is invalid" = "El código de seguridad de tu tarjeta es inválido.";
+"Your card's security code is invalid" = "El código de seguridad de tu tarjeta no es válido.";
 
 /* Short string for zip code (United States only) Please keep to 5 characters or less if possible. */
 "ZIP" = "ZIP";
 
 /* Caption for Zip Code field on address form (only shown when country is United States only) */
-"ZIP Code" = "Código postal";
+"ZIP Code" = "Código ZIP";
 

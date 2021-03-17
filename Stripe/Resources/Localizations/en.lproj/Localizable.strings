@@ -19,7 +19,11 @@
 /* Caption for Address field on address form */
 "Address" = "Address";
 
-/* Source type brand name */
+/* Payment Method type brand name */
+"AfterpayClearpay" = "AfterpayClearpay";
+
+/* Payment Method type brand name
+   Source type brand name */
 "Alipay" = "Alipay";
 
 /* Text for Apple Pay payment method */
@@ -96,11 +100,14 @@
 /* Placeholder string for name entry field. */
 "Full name" = "Full name";
 
+/* Payment Method type brand name. */
+"giropay" = "giropay";
+
 /* Source type brand name */
 "Giropay" = "Giropay";
 
 /* Payment Method type brand name. */
-"giropay" = "giropay";
+"GrabPay" = "GrabPay";
 
 /* Source type brand name */
 "iDEAL" = "iDEAL";
@@ -126,6 +133,9 @@
 /* Label for Name field on form */
 "Name" = "Name";
 
+/* Payment Method type brand name */
+"NetBanking" = "NetBanking";
+
 /* Button to move to the next text entry field */
 "Next" = "Next";
 
@@ -135,11 +145,17 @@
 /* Button to pay with a Bank Account (using FPX). */
 "Online Banking (FPX)" = "Online Banking (FPX)";
 
+/* Payment Method type brand name */
+"OXXO" = "OXXO";
+
 /* Source type brand name */
 "P24" = "P24";
 
 /* Title for Payment Method screen */
 "Payment Method" = "Payment Method";
+
+/* Payment Method type brand name */
+"PayPal" = "PayPal";
 
 /* Caption for Phone field on address form */
 "Phone" = "Phone";
@@ -174,8 +190,9 @@
 /* Label for shipping method form */
 "Shipping Method" = "Shipping Method";
 
-/* Source type brand name */
-"SOFORT" = "SOFORT";
+/* Payment Method type brand name
+   Source type brand name */
+"Sofort" = "Sofort";
 
 /* Caption for State field on address form (only countries that use state , like United States) */
 "State" = "State";
@@ -198,8 +215,14 @@
 /* Error when 3DS2 authentication timed out. */
 "Timed out authenticating your payment method -- try again" = "Timed out authenticating your payment method -- try again";
 
+/* Error when the user hasn't allowed the current app to access the camera when scanning a payment card. 'Settings' is the localized name of the iOS Settings app. */
+"To scan your card, you'll need to allow access to your camera in Settings." = "To scan your card, you'll need to allow access to your camera in Settings.";
+
 /* Default missing source type label */
 "Unknown" = "Unknown";
+
+/* Payment Method type brand name */
+"UPI" = "UPI";
 
 /* Button to fill shipping address from billing address. */
 "Use Billing" = "Use Billing";

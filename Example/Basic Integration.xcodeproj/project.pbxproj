@@ -13,6 +13,8 @@
 		04D0761D1A69E66F00094431 /* Stripe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D076191A69C14700094431 /* Stripe.framework */; };
 		04D0761E1A69E66F00094431 /* Stripe.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04D076191A69C14700094431 /* Stripe.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3143AB43230DF738003A54FC /* BasicIntegrationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3143AB42230DF738003A54FC /* BasicIntegrationUITests.swift */; };
+		31EFEE15258AE4110069BC5F /* Stripe3DS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31EFEE14258AE4110069BC5F /* Stripe3DS2.framework */; };
+		31EFEE16258AE4110069BC5F /* Stripe3DS2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 31EFEE14258AE4110069BC5F /* Stripe3DS2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B67046BB229F0D7E006CB603 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67046BA229F0D7E006CB603 /* EmojiCell.swift */; };
 		B67046BD229F61CF006CB603 /* EmojiCheckoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67046BC229F61CF006CB603 /* EmojiCheckoutCell.swift */; };
 		B690AC5122A1A52900D3F50A /* UIColor+Stripe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B690AC5022A1A52900D3F50A /* UIColor+Stripe.swift */; };
@@ -43,6 +45,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				04D0761E1A69E66F00094431 /* Stripe.framework in Embed Frameworks */,
+				31EFEE16258AE4110069BC5F /* Stripe3DS2.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,7 +63,7 @@
 		3143AB40230DF738003A54FC /* BasicIntegrationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BasicIntegrationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3143AB42230DF738003A54FC /* BasicIntegrationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicIntegrationUITests.swift; sourceTree = "<group>"; };
 		3143AB44230DF738003A54FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3635C32E22A87D36004298B8 /* Stripe3DS2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Stripe3DS2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		31EFEE14258AE4110069BC5F /* Stripe3DS2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Stripe3DS2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD79D2207FD44300F85BED /* fi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fi; path = Localizations/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8BBD79D3207FD45A00F85BED /* nb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = nb; path = Localizations/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B67046BA229F0D7E006CB603 /* EmojiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D0761D1A69E66F00094431 /* Stripe.framework in Frameworks */,
+				31EFEE15258AE4110069BC5F /* Stripe3DS2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +151,7 @@
 		04823F9F1A6849850098400B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3635C32E22A87D36004298B8 /* Stripe3DS2.framework */,
+				31EFEE14258AE4110069BC5F /* Stripe3DS2.framework */,
 				04D076191A69C14700094431 /* Stripe.framework */,
 			);
 			name = Frameworks;
@@ -173,8 +177,6 @@
 				04823F751A6849200098400B /* Frameworks */,
 				04823F761A6849200098400B /* Resources */,
 				04D0761F1A69E66F00094431 /* Embed Frameworks */,
-				04BC29A61CD9468500318357 /* Run Script */,
-				C113E0121ECF9D7F002E6E53 /* Carthage Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -210,7 +212,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1030;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Stripe;
 				TargetAttributes = {
 					04823F771A6849200098400B = {
@@ -282,37 +284,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		04BC29A61CD9468500318357 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework/integrate-dynamic-framework.sh\"\n";
-		};
-		C113E0121ECF9D7F002E6E53 /* Carthage Copy Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Carthage Copy Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if ! [ -x \"$(command -v /usr/local/bin/carthage)\" ]; then\necho 'carthage is not installed. This is not fatal, but you need it to use card.io.' >&2\nexit 0\nfi\n/usr/local/bin/carthage copy-frameworks\n\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		04823F741A6849200098400B /* Sources */ = {
@@ -395,6 +366,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -419,7 +391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -451,6 +423,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -468,7 +441,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Basic Integration/Basic Integration-Bridging-Header.h";

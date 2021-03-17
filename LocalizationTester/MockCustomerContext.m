@@ -7,11 +7,10 @@
 //
 
 #import "MockCustomerContext.h"
-#import "STPCustomer+Private.h"
 
 #pragma mark -  MockCustomer
 
-@interface MockCustomer: STPCustomer
+@interface MockCustomer: NSObject
 @property (nonatomic) NSMutableArray<STPPaymentMethod *> *mockPaymentMethods;
 @property (nonatomic) STPPaymentMethod *mockDefaultPaymentMethod;
 @property (nonatomic) STPAddress *mockShippingAddress;
@@ -108,35 +107,35 @@
     return self;
 }
 
-- (void)retrieveCustomer:(STPCustomerCompletionBlock)completion {
+- (void)retrieveCustomer:(void (^ _Nullable)(STPCustomer * _Nullable, NSError * _Nullable))completion {
     if (!self.neverRetrieveCustomer) {
         if (completion) {
-            completion(_mockCustomer, nil);
+            completion((STPCustomer *)_mockCustomer, nil);
         }
     }
 }
 
-- (void)updateCustomerWithShippingAddress:(STPAddress *)shipping completion:(STPErrorBlock)completion {
+- (void)updateCustomerWithShippingAddress:(STPAddress * _Nonnull)shipping completion:(void (^ _Nullable)(NSError * _Nullable))completion {
     _mockCustomer.mockShippingAddress = shipping;
     if (completion) {
         completion(nil);
     }
 }
 
-- (void)listPaymentMethodsForCustomerWithCompletion:(nullable STPPaymentMethodsCompletionBlock)completion {
+- (void)listPaymentMethodsForCustomerWithCompletion:(void (^ _Nullable)(NSArray<STPPaymentMethod *> * _Nullable, NSError * _Nullable))completion {
     if (!self.neverRetrieveCustomer) {
         completion(_mockCustomer.mockPaymentMethods, nil);
     }
 }
 
-- (void)attachPaymentMethodToCustomer:(STPPaymentMethod *)paymentMethod completion:(nullable STPErrorBlock)completion {
+- (void)attachPaymentMethodToCustomer:(STPPaymentMethod * _Nonnull)paymentMethod completion:(void (^ _Nullable)(NSError * _Nullable))completion {
     [_mockCustomer.mockPaymentMethods addObject:paymentMethod];
     if (completion) {
         completion(nil);
     }
 }
 
-- (void)detachPaymentMethodFromCustomer:(STPPaymentMethod *)paymentMethod completion:(nullable STPErrorBlock)completion {
+- (void)detachPaymentMethodFromCustomer:(STPPaymentMethod * _Nonnull)paymentMethod completion:(void (^ _Nullable)(NSError * _Nullable))completion {
     NSUInteger index = [_mockCustomer.mockPaymentMethods indexOfObjectPassingTest:^BOOL(STPPaymentMethod * _Nonnull obj, __unused NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj.stripeId == paymentMethod.stripeId) {
             *stop = YES;

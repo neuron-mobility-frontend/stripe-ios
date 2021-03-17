@@ -19,15 +19,34 @@ if ! command -v xcpretty > /dev/null; then
   gem install xcpretty --no-document || die "Executing \`gem install xcpretty\` failed"
 fi
 
-# Execute tests (iPhone 11 @ iOS 13.3)
-info "Executing tests (iPhone 11 @ iOS 13.3)..."
+# Execute tests (iPhone 11 @ iOS 13.7)
+info "Executing Basic Integration tests (iPhone 11 @ iOS 13.7)..."
 
-xcodebuild clean test \
+xcodebuild test \
   -workspace "Stripe.xcworkspace" \
   -scheme "Basic Integration" \
   -configuration "Debug" \
   -sdk "iphonesimulator" \
-  -destination "platform=iOS Simulator,name=iPhone 11,OS=13.3" \
+  -destination "platform=iOS Simulator,name=iPhone 11,OS=13.7" \
+  -derivedDataPath build-ci-tests \
+  | xcpretty
+
+exit_code="${PIPESTATUS[0]}"
+
+if [[ "${exit_code}" != 0 ]]; then
+  die "xcodebuild exited with non-zero status code: ${exit_code}"
+fi
+
+# Execute tests (iPhone 11 @ iOS latest)
+info "Executing integration tests (iPhone 11 @ iOS latest)..."
+
+xcodebuild test \
+  -workspace "Stripe.xcworkspace" \
+  -scheme "IntegrationTester" \
+  -configuration "Debug" \
+  -sdk "iphonesimulator" \
+  -destination "platform=iOS Simulator,name=iPhone 11,OS=latest" \
+  -derivedDataPath build-ci-tests \
   | xcpretty
 
 exit_code="${PIPESTATUS[0]}"

@@ -23,6 +23,12 @@ if ! command -v jazzy > /dev/null; then
 
 fi
 
+if [[ "${CI}" == "true" ]]; then
+  rm -rf build
+  rm -rf Carthage
+  rm -rf Example/Carthage
+fi
+
 info "Log is going to ${log_file}"
 
 # Reset log file
@@ -34,9 +40,7 @@ jazzy \
   --no-clean \
   --output "${script_dir}/../docs/docs" \
   --skip-documentation \
-  --framework-root "${script_dir}/.." \
-  --umbrella-header "${script_dir}/../Stripe/PublicHeaders/Stripe.h" \
-  --objc \
+  --framework-root "${script_dir}/../Stripe" \
   --sdk iphonesimulator \
   > ${log_file}
 

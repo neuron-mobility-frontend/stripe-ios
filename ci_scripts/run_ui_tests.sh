@@ -22,22 +22,23 @@ fi
 # Install test dependencies
 info "Installing test dependencies..."
 
-carthage bootstrap --platform iOS --configuration Release --no-use-binaries
+carthage bootstrap --platform iOS --configuration Release --no-use-binaries --cache-builds --use-xcframeworks
 carthage_exit_code="$?"
 
 if [[ "${carthage_exit_code}" != 0 ]]; then
   die "Executing carthage failed with status code: ${carthage_exit_code}"
 fi
 
-# Execute localization tests (iPhone 7 @ iOS 12.2)
-info "Executing localization tests (iPhone 7 @ iOS 12.2)..."
+# Execute localization tests (iPhone 8 @ iOS 13.7)
+info "Executing localization tests (iPhone 8 @ iOS 13.7)..."
 
-xcodebuild clean test \
+xcodebuild test \
   -workspace "Stripe.xcworkspace" \
   -scheme "LocalizationTester" \
   -configuration "Debug" \
   -sdk "iphonesimulator" \
-  -destination "platform=iOS Simulator,name=iPhone 7,OS=12.2" \
+  -destination "platform=iOS Simulator,name=iPhone 8,OS=13.7" \
+  -derivedDataPath build-ci-tests \
   | xcpretty
 
 exit_code="${PIPESTATUS[0]}"
