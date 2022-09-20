@@ -16,9 +16,9 @@ import UIKit
     case postalCode
 }
 
-class STPPaymentCardTextFieldViewModel: NSObject {
+public class STPPaymentCardTextFieldViewModel: NSObject {
     private var _cardNumber: String?
-    @objc dynamic var cardNumber: String? {
+    @objc public dynamic var cardNumber: String? {
         get {
             _cardNumber
         }
@@ -36,7 +36,7 @@ class STPPaymentCardTextFieldViewModel: NSObject {
         }
     }
 
-    @objc var rawExpiration: String? {
+    @objc public var rawExpiration: String? {
         get {
             var array: [String] = []
             if expirationMonth != nil && !(expirationMonth == "") {
@@ -57,7 +57,7 @@ class STPPaymentCardTextFieldViewModel: NSObject {
     }
 
     private var _cvc: String?
-    @objc dynamic var cvc: String? {
+    @objc public dynamic var cvc: String? {
         get {
             _cvc
         }
@@ -69,13 +69,13 @@ class STPPaymentCardTextFieldViewModel: NSObject {
     }
     @objc dynamic var postalCodeRequested = false
 
-    var postalCodeRequired: Bool {
+    public var postalCodeRequired: Bool {
         return postalCodeRequested
             && STPPostalCodeValidator.postalCodeIsRequired(forCountryCode: postalCodeCountryCode)
     }
 
     private var _postalCode: String?
-    var postalCode: String? {
+    public var postalCode: String? {
         get {
             _postalCode
         }
@@ -88,7 +88,7 @@ class STPPaymentCardTextFieldViewModel: NSObject {
     }
 
     private var _postalCodeCountryCode: String?
-    @objc dynamic var postalCodeCountryCode: String? {
+    @objc public dynamic var postalCodeCountryCode: String? {
         get {
             _postalCodeCountryCode
         }
@@ -115,15 +115,15 @@ class STPPaymentCardTextFieldViewModel: NSObject {
     }
     @objc dynamic private(set) var hasCompleteMetadataForCardNumber = false
 
-    var isNumberMaxLength: Bool {
+    public var isNumberMaxLength: Bool {
         return (cardNumber?.count ?? 0) == STPBINController.shared.maxCardNumberLength()
     }
 
-    func defaultPlaceholder() -> String {
+    public func defaultPlaceholder() -> String {
         return "4242424242424242"
     }
 
-    func compressedCardNumber(withPlaceholder placeholder: String?) -> String? {
+    public func compressedCardNumber(withPlaceholder placeholder: String?) -> String? {
         var cardNumber = self.cardNumber
         if (cardNumber?.count ?? 0) == 0 {
             cardNumber = placeholder ?? defaultPlaceholder()
@@ -151,7 +151,7 @@ class STPPaymentCardTextFieldViewModel: NSObject {
         return nil
     }
 
-    func validationStateForExpiration() -> STPCardValidationState {
+    public func validationStateForExpiration() -> STPCardValidationState {
         let monthState = STPCardValidator.validationState(forExpirationMonth: expirationMonth ?? "")
         let yearState = STPCardValidator.validationState(
             forExpirationYear: expirationYear ?? "", inMonth: expirationMonth ?? "")
@@ -164,11 +164,11 @@ class STPPaymentCardTextFieldViewModel: NSObject {
         }
     }
 
-    func validationStateForCVC() -> STPCardValidationState {
+    public func validationStateForCVC() -> STPCardValidationState {
         return STPCardValidator.validationState(forCVC: cvc ?? "", cardBrand: brand)
     }
 
-    func validationStateForPostalCode() -> STPCardValidationState {
+    public func validationStateForPostalCode() -> STPCardValidationState {
         if (postalCode?.count ?? 0) > 0 {
             return .valid
         } else {
@@ -176,7 +176,7 @@ class STPPaymentCardTextFieldViewModel: NSObject {
         }
     }
 
-    func validationStateForCardNumber(handler: @escaping (STPCardValidationState) -> Void) {
+    public func validationStateForCardNumber(handler: @escaping (STPCardValidationState) -> Void) {
         STPBINController.shared.retrieveBINRanges(forPrefix: cardNumber ?? "") { _ in
             self.hasCompleteMetadataForCardNumber = STPBINController.shared.hasBINRanges(
                 forPrefix: self.cardNumber ?? "")
@@ -187,7 +187,7 @@ class STPPaymentCardTextFieldViewModel: NSObject {
     }
 
     private var _expirationMonth: String?
-    @objc private(set) var expirationMonth: String? {
+    @objc public private(set) var expirationMonth: String? {
         get {
             _expirationMonth
         }
@@ -203,7 +203,7 @@ class STPPaymentCardTextFieldViewModel: NSObject {
         }
     }
     private var _expirationYear: String?
-    @objc private(set) dynamic var expirationYear: String? {
+    @objc public private(set) dynamic var expirationYear: String? {
         get {
             _expirationYear
         }

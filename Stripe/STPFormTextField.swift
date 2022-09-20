@@ -9,7 +9,7 @@
 import UIKit
 @_spi(STP) import StripeCore
 
-enum STPFormTextFieldAutoFormattingBehavior: Int {
+public enum STPFormTextFieldAutoFormattingBehavior: Int {
     case none
     case phoneNumbers
     case cardNumbers
@@ -17,7 +17,7 @@ enum STPFormTextFieldAutoFormattingBehavior: Int {
     case bsbNumber
 }
 
-@objc protocol STPFormTextFieldDelegate: UITextFieldDelegate {
+@objc public protocol STPFormTextFieldDelegate: UITextFieldDelegate {
     // Note, post-Swift conversion:
     // In lieu of a real delegate proxy, this should always be implemented and call:
     //    if let textField = textField as? STPFormTextField, let delegateProxy = textField.delegateProxy {
@@ -37,7 +37,7 @@ enum STPFormTextFieldAutoFormattingBehavior: Int {
     @objc optional func formTextFieldTextDidChange(_ textField: STPFormTextField)
 }
 
-@objc class STPFormTextField: STPValidatedTextField {
+@objc public class STPFormTextField: STPValidatedTextField {
 
     private var _selectionEnabled = false
     var selectionEnabled: Bool {
@@ -68,7 +68,7 @@ enum STPFormTextFieldAutoFormattingBehavior: Int {
     }
     // defaults to NO
     private var _autoFormattingBehavior: STPFormTextFieldAutoFormattingBehavior = .none
-    var autoFormattingBehavior: STPFormTextFieldAutoFormattingBehavior {
+    public var autoFormattingBehavior: STPFormTextFieldAutoFormattingBehavior {
         get {
             _autoFormattingBehavior
         }
@@ -156,7 +156,7 @@ enum STPFormTextFieldAutoFormattingBehavior: Int {
     }
 
     private weak var _formDelegate: STPFormTextFieldDelegate?
-    weak var formDelegate: STPFormTextFieldDelegate? {
+    public weak var formDelegate: STPFormTextFieldDelegate? {
         get {
             _formDelegate
         }
@@ -165,7 +165,7 @@ enum STPFormTextFieldAutoFormattingBehavior: Int {
             delegate = formDelegate
         }
     }
-    var delegateProxy: STPTextFieldDelegateProxy?
+    public var delegateProxy: STPTextFieldDelegateProxy?
     private var textFormattingBlock: STPFormTextTransformationBlock?
 
     class func attributes(for attributedString: NSAttributedString?) -> [AnyHashable: Any]? {
@@ -360,12 +360,12 @@ enum STPFormTextFieldAutoFormattingBehavior: Int {
     }
 }
 
-class STPTextFieldDelegateProxy: NSObject, UITextFieldDelegate {
+public class STPTextFieldDelegateProxy: NSObject, UITextFieldDelegate {
     internal var inShouldChangeCharactersInRange = false
     var autoformattingBehavior: STPFormTextFieldAutoFormattingBehavior = .none
     var selectionEnabled = false
 
-    func textField(
+    public func textField(
         _ textField: UITextField, shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {

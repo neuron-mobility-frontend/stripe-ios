@@ -12,7 +12,7 @@ import UIKit
 /// its contents.
 /// This does *not* (currently?) have any logic or hooks for determining whether
 /// the contents are valid, that must be done by something else.
-class STPValidatedTextField: UITextField {
+public class STPValidatedTextField: UITextField {
 
     // MARK: - Property Overrides
     private var _defaultColor: UIColor?
@@ -53,7 +53,7 @@ class STPValidatedTextField: UITextField {
 
     private var _validText = false
     /// flag to indicate whether the contents are valid or not.
-    @objc var validText: Bool {
+    @objc public var validText: Bool {
         get {
             _validText
         }
