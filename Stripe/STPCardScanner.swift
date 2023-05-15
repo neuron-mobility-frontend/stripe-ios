@@ -18,14 +18,14 @@ enum STPCardScannerError: Int {
 }
 
 @available(iOS 13, macCatalyst 14, *)
-@objc protocol STPCardScannerDelegate: NSObjectProtocol {
+@objc public  protocol STPCardScannerDelegate: NSObjectProtocol {
     @objc(cardScanner:didFinishWithCardParams:error:) func cardScanner(
         _ scanner: STPCardScanner, didFinishWith cardParams: STPPaymentMethodCardParams?,
         error: Error?)
 }
 
 @available(iOS 13, macCatalyst 14, *)
-class STPCardScanner: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
+public class STPCardScanner: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     // iOS will kill the app if it tries to request the camera without an NSCameraUsageDescription
     static let cardScanningAvailableCameraHasUsageDescription = {
         return
@@ -41,7 +41,7 @@ class STPCardScanner: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         return cardScanningAvailableCameraHasUsageDescription
     }
 
-    weak var cameraView: STPCameraView?
+    public weak var cameraView: STPCameraView?
 
     var feedbackGenerator: UINotificationFeedbackGenerator?
 
@@ -85,14 +85,14 @@ class STPCardScanner: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     override init() {
     }
 
-    init(delegate: STPCardScannerDelegate?) {
+    public init(delegate: STPCardScannerDelegate?) {
         super.init()
         self.delegate = delegate
         captureSessionQueue = DispatchQueue(label: "com.stripe.CardScanning.CaptureSessionQueue")
         deviceOrientation = UIDevice.current.orientation
     }
 
-    func start() {
+    public func start() {
         if isScanning {
             return
         }
@@ -123,7 +123,7 @@ class STPCardScanner: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         })
     }
 
-    func stop() {
+    public func stop() {
         stopWithError(nil)
     }
 
@@ -248,7 +248,7 @@ class STPCardScanner: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 
     // MARK: Processing
-    func captureOutput(
+    public func captureOutput(
         _ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer,
         from connection: AVCaptureConnection
     ) {
@@ -479,6 +479,6 @@ let STPCardScannerErrorDomain = "STPCardScannerErrorDomain"
 
 @available(iOS 13, macCatalyst 14, *)
 /// :nodoc:
-extension STPCardScanner: STPAnalyticsProtocol {
-    static var stp_analyticsIdentifier = "STPCardScanner"
+@_spi(STP) extension STPCardScanner: STPAnalyticsProtocol {
+    @_spi(STP) public static var stp_analyticsIdentifier = "STPCardScanner"
 }

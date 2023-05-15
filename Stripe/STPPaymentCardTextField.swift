@@ -922,7 +922,7 @@ open class STPPaymentCardTextField: UIControl, UIKeyInput, STPFormTextFieldDeleg
 
     // MARK: readonly variables
 
-    func setText(_ text: String?, inField field: STPCardFieldType) {
+    public func setText(_ text: String?, inField field: STPCardFieldType) {
         let nonNilText = text ?? ""
         var textField: STPFormTextField?
         switch field {

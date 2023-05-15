@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@objc enum STPCardFieldType: Int {
+@objc public enum STPCardFieldType: Int {
     case number
     case expiration
     case CVC

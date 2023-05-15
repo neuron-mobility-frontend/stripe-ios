@@ -780,7 +780,7 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
     static let cardScannerKSTPCardScanAnimationTime: TimeInterval = 0.04
 
     @available(iOS 13, macCatalyst 14, *)
-    func cardScanner(
+    public func cardScanner(
         _ scanner: STPCardScanner, didFinishWith cardParams: STPPaymentMethodCardParams?,
         error: Error?
     ) {

@@ -10,7 +10,7 @@ import AVFoundation
 import UIKit
 
 @available(macCatalyst 14.0, *)
-class STPCameraView: UIView {
+public class STPCameraView: UIView {
     private var flashLayer: CALayer?
 
     var captureSession: AVCaptureSession? {
@@ -58,7 +58,7 @@ class STPCameraView: UIView {
         videoPreviewLayer.videoGravity = .resizeAspectFill
     }
 
-    override class var layerClass: AnyClass {
+    public override class var layerClass: AnyClass {
         return AVCaptureVideoPreviewLayer.self
     }
 
