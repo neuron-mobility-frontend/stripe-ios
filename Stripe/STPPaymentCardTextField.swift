@@ -1793,19 +1793,36 @@ open class STPPaymentCardTextField: UIControl, UIKeyInput, STPFormTextFieldDeleg
                 delegate?.paymentCardTextFieldDidEndEditingPostalCode?(self)
             }
         }
-
-        if !isMidSubviewEditingTransition {
-            layoutViews(
-                toFocus: nil,
-                becomeFirstResponder: false,
-                animated: true, completion: nil)
-            updateImage(for: .number)
-            if delegate?.responds(
-                to: #selector(STPPaymentCardTextFieldDelegate.paymentCardTextFieldDidEndEditing(_:))
-            )
-                ?? false
-            {
-                delegate?.paymentCardTextFieldDidEndEditing?(self)
+        
+        if #available(iOS 17.0, *) {
+            if viewModel.isValid || !isMidSubviewEditingTransition {
+                layoutViews(
+                    toFocus: nil,
+                    becomeFirstResponder: false,
+                    animated: true, completion: nil)
+                updateImage(for: .number)
+                if delegate?.responds(
+                    to: #selector(STPPaymentCardTextFieldDelegate.paymentCardTextFieldDidEndEditing(_:))
+                )
+                    ?? false
+                {
+                    delegate?.paymentCardTextFieldDidEndEditing?(self)
+                }
+            }
+        } else {
+            if !isMidSubviewEditingTransition {
+                layoutViews(
+                    toFocus: nil,
+                    becomeFirstResponder: false,
+                    animated: true, completion: nil)
+                updateImage(for: .number)
+                if delegate?.responds(
+                    to: #selector(STPPaymentCardTextFieldDelegate.paymentCardTextFieldDidEndEditing(_:))
+                )
+                    ?? false
+                {
+                    delegate?.paymentCardTextFieldDidEndEditing?(self)
+                }
             }
         }
     }
