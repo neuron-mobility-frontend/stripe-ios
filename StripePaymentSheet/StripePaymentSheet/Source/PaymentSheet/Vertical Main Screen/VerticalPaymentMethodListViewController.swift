@@ -38,6 +38,7 @@ class VerticalPaymentMethodListViewController: UIViewController {
     private var shouldShowApplePay: Bool
     private var shouldShowLink: Bool
     private var paymentMethodTypes: [PaymentSheet.PaymentMethodType]
+    private var showSavedPaymentMethods: Bool
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -46,6 +47,7 @@ class VerticalPaymentMethodListViewController: UIViewController {
     init(
         initialSelection: RowButtonType?,
         savedPaymentMethods: [STPPaymentMethod],
+        showSavedPaymentMethods: Bool,
         paymentMethodTypes: [PaymentSheet.PaymentMethodType],
         shouldShowApplePay: Bool,
         shouldShowLink: Bool,
@@ -68,6 +70,7 @@ class VerticalPaymentMethodListViewController: UIViewController {
         self.shouldShowApplePay = shouldShowApplePay
         self.shouldShowLink = shouldShowLink
         self.paymentMethodTypes = paymentMethodTypes
+        self.showSavedPaymentMethods = showSavedPaymentMethods
 
         super.init(nibName: nil, bundle: nil)
         self.renderContent()
@@ -90,7 +93,7 @@ class VerticalPaymentMethodListViewController: UIViewController {
         // Create stack view views after super.init so that we can reference `self`
         var views = [UIView]()
         // Saved payment method:
-        if let firstSavedPaymentMethod = savedPaymentMethods.first {
+        if showSavedPaymentMethods, let firstSavedPaymentMethod = savedPaymentMethods.first {
             let selection = RowButtonType.saved(paymentMethod: firstSavedPaymentMethod)
             let accessoryButton: RowButton.RightAccessoryButton? = {
                 if let savedPaymentMethodAccessoryType {

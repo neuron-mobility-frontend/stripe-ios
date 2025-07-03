@@ -397,6 +397,7 @@ class PaymentSheetVerticalViewController: UIViewController, FlowControllerViewCo
         return VerticalPaymentMethodListViewController(
             initialSelection: initialSelection,
             savedPaymentMethods: savedPaymentMethods,
+            showSavedPaymentMethods: configuration.showSavedPaymentMethods,
             paymentMethodTypes: paymentMethodTypes,
             shouldShowApplePay: shouldShowApplePayInList,
             shouldShowLink: shouldShowLinkInList,
